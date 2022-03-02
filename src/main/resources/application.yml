@@ -1,0 +1,158 @@
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  profiles: dev
+  datasource:
+    #url: jdbc:oracle:thin:@10.67.50.70:1521/BDWE420
+    url: jdbc:oracle:thin:@172.23.30.116:1521/FPLPOOL
+    username: sinet
+    password: Gly65Pct
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    generate-ddl: false
+  application:
+    name: BackendEstadoFinanciero_dev
+  jackson:
+    time-zone: GMT-5
+    date-format: dd/MM/yyyy HH:mm:ss
+server:
+  port: 9997
+app:
+  pathPID: PIDs/
+  path_rest_service: /api_dev/estado-financiero
+logging:
+  level:
+    root: INFO  
+    org:
+      hibernate:
+        SQL: DEBUG
+      type:
+        descriptor:
+          sql:
+            BasicBinder: TRACE   
+  file: logs/backendEstadoFinanciero.log
+  pattern:
+    console: '[%-5level] %d{yyyy-MM-dd HH:mm:ss} - %msg%n'   
+    file: '[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %msg%n'
+
+---
+spring:
+  profiles: qa
+  datasource:
+    url: jdbc:oracle:thin:@172.23.30.116:1521/FPLPOOL
+    username: sinet
+    password: Gly65Pct
+    driver-class-name: oracle.jdbc.OracleDriver    
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    generate-ddl: false
+  application:
+    name: BackendEstadoFinanciero_qa
+  jackson:
+    time-zone: GMT-5
+    date-format: dd/MM/yyyy HH:mm:ss
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    preferIpAddress: true
+server:
+  port: 0
+app:
+  pathPID: PIDs/
+  path_rest_service: /api_qa/estado-financiero
+logging:
+  level:
+    root: WARN
+    org:
+      hibernate:
+        SQL: DEBUG
+      type:
+        descriptor:
+          sql:
+            BasicBinder: TRACE
+  file: logs/backendEstadoFinanciero.log
+  pattern:
+    file: '[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %msg%n'
+    
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:oracle:thin:@10.67.50.70:1521/BDWE420
+    #url: jdbc:oracle:thin:@172.23.30.116:1521/FPLPOOL
+    username: sinet
+    password: Gly65Pct
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    generate-ddl: false
+  application:
+    name: BackendEstadoFinanciero_prod
+  jackson:
+    time-zone: GMT-5
+    date-format: dd/MM/yyyy HH:mm:ss
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    preferIpAddress: false
+server:
+  port: 0
+app:
+  pathPID: PIDs/
+  path_rest_service: /api/estado-financiero
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        security: INFO
+        web: ERROR
+      hibernate:
+        SQL: WARN
+  file: logs/backendEstadoFinanciero.log
+  pattern:
+    file: '[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %msg%n'
+        
+---
+spring:
+  profiles: prod_ddl
+  datasource:
+    url: jdbc:oracle:thin:@10.67.50.70:1521/BDWE420
+    username: sinet
+    password: Gly65Pct
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    generate-ddl: true
+  application:
+    name: BackendEstadoFinanciero_prod
+  jackson:
+    time-zone: GMT-5
+    date-format: dd/MM/yyyy HH:mm:ss
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    preferIpAddress: false
+server:
+  port: 0
+app:
+  pathPID: PIDs/
+  path_rest_service: /api/estado-financiero
+logging:
+  level:
+    root: WARN
+  file: logs/backendEstadoFinanciero.log
+  pattern:
+    file: '[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %msg%n'
